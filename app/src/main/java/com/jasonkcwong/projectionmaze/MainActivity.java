@@ -47,6 +47,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     float pitchOffset = 0;
     float rollOffset = 0;
 
+
     float azimutSum = 0;
     float pitchSum = 0;
     float rollSum = 0;
@@ -54,7 +55,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     float pitchCount = 0;
     float rollCount = 0;
 
-    boolean isOffset = false;
+    boolean isOffset = true;
 
     private long lastUpdate = 0;
 
@@ -81,11 +82,13 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
                 float roll = SensorManager.getOrientation(R, orientation)[2];
                 rollSum += roll;
                 rollCount++;
-                if (!isOffset){
-                    azimutOffset = -azimut;
-                    pitchOffset = -pitch;
-                    rollOffset = -roll;
-                    isOffset = true;
+
+                if(isOffset){
+                    pitchOffset = pitch;
+
+                    azimutOffset = azimut;
+                    rollOffset = roll;
+                    isOffset = false;
                 }
             }
         } else {
@@ -93,7 +96,27 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
             float azimutAvg = azimutSum/azimutCount;
             float pitchAvg = pitchSum/pitchCount;
             float rollAvg = rollSum/rollCount;
-            String s = String.format("Z: %.3f%nX: %.3f%nY: %.3f", Math.toDegrees(azimutAvg+azimutOffset), Math.toDegrees(pitchAvg+pitchOffset), Math.toDegrees(rollAvg+rollOffset));
+
+
+
+            if(azimutAvg < 0){
+                azimutAvg += Math.PI * 2;
+            }
+            if(pitchAvg < 0){
+                pitchAvg += Math.PI * 2;
+            }
+            if(rollAvg < 0){
+                rollAvg += Math.PI *2;
+            }
+
+
+
+            azimutAvg -= azimutOffset;
+            pitchAvg -= pitchOffset;
+            rollAvg -= rollOffset;
+
+
+            String s = String.format("Y: %.3f%nZ: %.3f%nX: %.3f", azimutAvg, pitchAvg, rollAvg );
             displayReading.setText(s);
             resetOrientation();
         }
