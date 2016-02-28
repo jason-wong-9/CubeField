@@ -42,9 +42,6 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     }
 
 
-    float azimut;
-    float pitch;
-    float roll;
     float azimutSum = 0;
     float pitchSum = 0;
     float rollSum = 0;
@@ -68,13 +65,13 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
                 SensorManager.getRotationMatrixFromVector(R, event.values);
                 // get the azimuth value (orientation[0]) in degree
 
-                azimut = SensorManager.getOrientation(R, orientation)[0];
+                float azimut = SensorManager.getOrientation(R, orientation)[0];
                 azimutSum += azimut;
                 azimutCount++;
-                pitch = SensorManager.getOrientation(R, orientation)[1];
+                float pitch = SensorManager.getOrientation(R, orientation)[1];
                 pitchSum += pitch;
                 pitchCount++;
-                roll = SensorManager.getOrientation(R, orientation)[2];
+                float roll = SensorManager.getOrientation(R, orientation)[2];
                 rollSum += roll;
                 rollCount++;
             }
@@ -85,13 +82,17 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
             float rollAvg = rollSum/rollCount;
             String s = String.format("Z: %.3f%nX: %.3f%nY: %.3f", Math.toDegrees(azimutAvg), Math.toDegrees(pitchAvg), Math.toDegrees(rollAvg));
             displayReading.setText(s);
-            azimutSum = 0;
-            azimutCount = 0;
-            pitchSum = 0;
-            pitchCount = 0;
-            rollSum = 0;
-            rollCount = 0;
+            resetOrientation();
         }
+    }
+
+    public void resetOrientation(){
+        azimutSum = 0;
+        azimutCount = 0;
+        pitchSum = 0;
+        pitchCount = 0;
+        rollSum = 0;
+        rollCount = 0;
     }
 synchronized
     @Override
