@@ -43,6 +43,9 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         sm.unregisterListener(this);
     }
 
+    float azimutOffset = 0;
+    float pitchOffset = 0;
+    float rollOffset = 0;
 
     float azimutSum = 0;
     float pitchSum = 0;
@@ -50,6 +53,8 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     float azimutCount = 0;
     float pitchCount = 0;
     float rollCount = 0;
+
+    boolean isOffset = false;
 
     private long lastUpdate = 0;
 
@@ -76,13 +81,19 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
                 float roll = SensorManager.getOrientation(R, orientation)[2];
                 rollSum += roll;
                 rollCount++;
+                if (!isOffset){
+                    azimutOffset = -azimut;
+                    pitchOffset = -pitch;
+                    rollOffset = -roll;
+                    isOffset = true;
+                }
             }
         } else {
             lastUpdate = System.currentTimeMillis();
             float azimutAvg = azimutSum/azimutCount;
             float pitchAvg = pitchSum/pitchCount;
             float rollAvg = rollSum/rollCount;
-            String s = String.format("Z: %.3f%nX: %.3f%nY: %.3f", Math.toDegrees(azimutAvg), Math.toDegrees(pitchAvg), Math.toDegrees(rollAvg));
+            String s = String.format("Z: %.3f%nX: %.3f%nY: %.3f", Math.toDegrees(azimutAvg+azimutOffset), Math.toDegrees(pitchAvg+pitchOffset), Math.toDegrees(rollAvg+rollOffset));
             displayReading.setText(s);
             resetOrientation();
         }
