@@ -47,6 +47,9 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     float pitchOffset = 0;
     float rollOffset = 0;
 
+    float lastRawAzimutValue = 0;
+    float lastRawPitchValue = 0;
+    float lastRawRollValue = 0;
 
     float azimutSum = 0;
     float pitchSum = 0;
@@ -97,7 +100,9 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
             float pitchAvg = pitchSum/pitchCount;
             float rollAvg = rollSum/rollCount;
 
-
+            lastRawAzimutValue = azimutAvg;
+            lastRawPitchValue = pitchAvg;
+            lastRawRollValue = rollAvg;
 
             if(azimutAvg < 0){
                 azimutAvg += Math.PI * 2;
@@ -109,14 +114,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
                 rollAvg += Math.PI *2;
             }
 
-
-
-            azimutAvg -= azimutOffset;
-            pitchAvg -= pitchOffset;
-            rollAvg -= rollOffset;
-
-
-            String s = String.format("Y: %.3f%nZ: %.3f%nX: %.3f", azimutAvg, pitchAvg, rollAvg );
+            String s = String.format("Y: %.3f%nZ: %.3f%nX: %.3f", Math.toDegrees(azimutAvg), Math.toDegrees(pitchAvg), Math.toDegrees(rollAvg));
             displayReading.setText(s);
             resetOrientation();
         }
@@ -130,6 +128,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         rollSum = 0;
         rollCount = 0;
     }
+
 synchronized
     @Override
     public void onAccuracyChanged(Sensor sensor, int accuracy) {
@@ -139,6 +138,9 @@ synchronized
     public void displayStart(View view){
         Log.d("Clicked", "Clicked displayStart()");
         Intent i= new Intent(MainActivity.this, StartActivity.class);
+        i.putExtra(StartActivity.EXTRA_AZIMUT_OFFSET, lastRawAzimutValue);
+        i.putExtra(StartActivity.EXTRA_PITCH_OFFSET, lastRawPitchValue);
+        i.putExtra(StartActivity.EXTRA_ROLL_OFFSET, lastRawRollValue);
         startActivity(i);
     }
 }
