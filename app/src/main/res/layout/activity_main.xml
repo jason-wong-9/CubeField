@@ -14,4 +14,14 @@
         android:layout_height="wrap_content"
         android:text="X: Y: Z:"
         android:id="@+id/displayReading" />
+
+    <Button
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="startScreen"
+        android:id="@+id/startScreen"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true"
+        android:onClick="displayStart"/>
 </RelativeLayout>

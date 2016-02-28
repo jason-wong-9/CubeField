@@ -1,5 +1,6 @@
 package com.jasonkcwong.projectionmaze;
 
+import android.content.Intent;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
@@ -7,6 +8,7 @@ import android.hardware.SensorManager;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.View;
 import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity implements SensorEventListener{
@@ -33,7 +35,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     protected void onResume() {
         super.onResume();
 
-        sm.registerListener(this, rotationvector, SensorManager.SENSOR_DELAY_UI);
+        sm.registerListener(this, rotationvector, SensorManager.SENSOR_DELAY_FASTEST);
     }
 
     protected void onPause() {
@@ -55,7 +57,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     public void onSensorChanged(SensorEvent event) {
 
         Log.i("TAG", (System.currentTimeMillis() - lastUpdate) + "");
-        if (System.currentTimeMillis() - lastUpdate < 400) {
+        if (System.currentTimeMillis() - lastUpdate < 40) {
 
             float orientation[] = new float[3];
 
@@ -98,5 +100,11 @@ synchronized
     @Override
     public void onAccuracyChanged(Sensor sensor, int accuracy) {
 
+    }
+
+    public void displayStart(View view){
+        Log.d("Clicked", "Clicked displayStart()");
+        Intent i= new Intent(MainActivity.this, StartActivity.class);
+        startActivity(i);
     }
 }
