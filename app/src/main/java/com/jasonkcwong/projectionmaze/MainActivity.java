@@ -9,9 +9,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity implements SensorEventListener{
-
-    Sensor accelerometer;
-    Sensor magnetometer;
+    
     Sensor rotationvector;
     SensorManager sm;
 
@@ -26,16 +24,14 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         displayReading = (TextView) findViewById(R.id.displayReading);
 
         sm = (SensorManager) getSystemService(SENSOR_SERVICE);
-//        accelerometer = sm.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
-//        magnetometer = sm.getDefaultSensor(Sensor.TYPE_MAGNETIC_FIELD);
+
         rotationvector = sm.getDefaultSensor(Sensor.TYPE_ROTATION_VECTOR);
 
     }
 
     protected void onResume() {
         super.onResume();
-//        sm.registerListener(this, accelerometer, SensorManager.SENSOR_DELAY_UI);
-//        sm.registerListener(this, magnetometer, SensorManager.SENSOR_DELAY_UI);
+
         sm.registerListener(this, rotationvector, SensorManager.SENSOR_DELAY_UI);
     }
 
@@ -44,8 +40,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         sm.unregisterListener(this);
     }
 
-    float[] mGravity;
-    float[] mGeomagnetic;
+
     float azimut;
     float pitch;
     float roll;
@@ -62,24 +57,9 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
 
         lastUpdate = System.currentTimeMillis();
 
-//        if (event.sensor.getType() == Sensor.TYPE_ACCELEROMETER)
-//            mGravity = event.values.clone();
-//        if (event.sensor.getType() == Sensor.TYPE_MAGNETIC_FIELD)
-//            mGeomagnetic = event.values.clone();
+
         float orientation[] = new float[3];
-//        if (mGravity != null && mGeomagnetic != null) {
-//            float R[] = new float[9];
-//            float I[] = new float[9];
-//
-//            boolean success = SensorManager.getRotationMatrix(R, I, mGravity, mGeomagnetic);
-//            if (success) {
-//
-//                SensorManager.getOrientation(R, orientation);
-//                azimut = orientation[0]; // orientation contains: azimut, pitch and roll
-//                pitch = orientation[1];
-//                roll = orientation[2];
-//            }
-//        }
+
         if( event.sensor.getType() == Sensor.TYPE_ROTATION_VECTOR ){
             float R[] = new float[9];
             // calculate th rotation matrix
