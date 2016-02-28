@@ -65,7 +65,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     @Override
     public void onSensorChanged(SensorEvent event) {
 
-        Log.i("TAG", (System.currentTimeMillis() - lastUpdate) + "");
+        //Log.i("TAG", (System.currentTimeMillis() - lastUpdate) + "");
         if (System.currentTimeMillis() - lastUpdate < 40) {
 
             float orientation[] = new float[3];

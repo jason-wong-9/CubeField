@@ -6,7 +6,6 @@ import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.ViewTreeObserver;
 import android.widget.TextView;
 
@@ -45,8 +44,8 @@ public class StartActivity extends AppCompatActivity implements SensorEventListe
     private static final int RENDER_DIST = 10000;
 
     private static final int MAP_SIZE = 10000;
-    private static final int NUM_SQUARES = 100;
-    private static final int SQUARE_SIZE = 1000;
+    private static final int NUM_SQUARES = 50;
+    private static final int SQUARE_SIZE = 500;
 
     private int mScreenWidth;
     private int mScreenHeight;
@@ -164,15 +163,12 @@ public class StartActivity extends AppCompatActivity implements SensorEventListe
             if (mViewIsReady) {
                 Vector angle = new Vector(rollAvg, azimutAvg, pitchAvg);
                 Vector d = Projections.getNormal(angle).multiply(mSpeed);
-                Log.i("Vector1", d.toString());
                 for (int i=0; i<3; i++) {
                     double temp = mObserver.get(i)+d.get(i);
                     if (!Double.isNaN(temp)) {
-                        Log.i("Vector1"+i, temp+"");
                         mObserver.set(i, temp);
                     }
                 }
-                Log.i("Vector2", mObserver.toString());
                 List<RenderQueueItem> renderQueue = Projections.getRenderQueue(mCubes, mObserver, angle,
                         mScreenWidth, mScreenHeight, mScreenDist, RENDER_DIST);
                 mGameView.setRenderQueue(renderQueue);
