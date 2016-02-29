@@ -2,6 +2,7 @@
 An android application that is created during SportsHack in a team of three. It  allows the user to navigate through 3D space with randomly-generated cubes in a Virtual Reality setting. This is made purely with Java along with our own implementation of perspective projection that converts a bunch of 3D vectors onto a 2D plane.
 
 
+![alt tag](https://cloud.githubusercontent.com/assets/11794656/13404920/eb2ad1c2-ded0-11e5-9e82-112427cc2f34.jpg)
 
 ## Technologies
 <p><b>Programming Language:</b> Java, Android</p>
