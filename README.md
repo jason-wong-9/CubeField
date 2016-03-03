@@ -5,7 +5,7 @@ An Android application that is created during nwHacks in a team of three. It all
 ![alt tag](https://cloud.githubusercontent.com/assets/11794656/13404920/eb2ad1c2-ded0-11e5-9e82-112427cc2f34.jpg)
 
 ## Technologies
-<p><b>Programming Language:</b> Java, Android</p>
+<p><b>Programming Language:</b> Java</p>
 <p><b>Mathematics:</b> Linear Algebra, Perspective Projection</p>
 
 ##Contributers
